@@ -9,8 +9,6 @@ import (
 	"unsafe"
 )
 
-//import "fmt"
-
 type Page struct {
 	p *C.struct__PopplerPage
 }
@@ -40,9 +38,9 @@ func (p *Page) Duration() float64 {
 	return float64(C.poppler_page_get_duration(p.p))
 }
 
-//Close frees memory allocated when Poppler opened the page
+// Close frees memory allocated when Poppler opened the page
 func (p *Page) Close() {
-	//GC/finalizer shouldn't try to free C memory that has been freed already
+	// GC/finalizer shouldn't try to free C memory that has been freed already
 	runtime.SetFinalizer(p, nil)
 	closePage(p)
 	p.p = nil

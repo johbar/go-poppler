@@ -48,8 +48,8 @@ func (d *Document) GetNPages() int {
 func (d *Document) GetPage(i int) (page *Page) {
 	p := C.poppler_document_get_page(d.doc, C.int(i))
 	page = &Page{p: p}
-	//Make sure the C memory gets freed at some point
-	//even if the user doesn't call p.Close():
+	// Make sure the C memory gets freed at some point
+	// even if the user doesn't call p.Close():
 	runtime.SetFinalizer(page, closePage)
 	return
 }
@@ -62,9 +62,9 @@ func (d *Document) GetNAttachments() int {
 	return int(C.poppler_document_get_n_attachments(d.doc))
 }
 
-//Close releases memory and ressources allocated by Poppler
+// Close releases memory and ressources allocated by Poppler
 func (d *Document) Close() {
-	//GC shouldn't try to free C memory that has been freed already:
+	// GC shouldn't try to free C memory that has been freed already:
 	runtime.SetFinalizer(d, nil)
 	closeDocument(d)
 }
@@ -76,9 +76,3 @@ func closeDocument(d *Document) {
 		d.fd.Close()
 	}
 }
-
-/*
-func (d *Document) GetAttachments() []Attachment {
-	return
-}
-*/
