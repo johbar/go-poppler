@@ -32,7 +32,7 @@ This might add a significant memory overhead in long-running high-throughput pro
 They are evicted by the finalizer but the GC might run too late to prevent a OOM as it doesn't take these into account when it schedules the next cycle.
 
 One advantage of relying on finalizes solely might be an improved CPU utilization because they run on their own goroutine.
-So your main routine doesn't need to handle the clean-up. (But you can archive this in many other ways,
+So your main routine doesn't need to handle the clean-up. (But you can achieve this in many other ways,
 I guess, e.g. by writing your own goroutine and using channels.)
 
 *Tl;dr*: Be careful when relying on finalizers; do some (load) tests and watch your RAM!
